@@ -1,0 +1,23 @@
+.button {
+    display: inline-block;
+    background-color: red;
+    width: fit-content;
+    padding: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.5s ease; /* Agrega una transición suave para una animación más agradable */
+}
+#buttons {
+    position: fixed;
+    bottom: 2%;
+}
+.button:hover {
+    color: rgb(113, 0, 0);
+    transform: scale(1.07); /* Escala el div al 120% del tamaño original */
+}
+#resetAll{
+    position: fixed;
+    left: 45%;
+}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <app-nav-bar></app-nav-bar>
+    <h1>MOVIMIENTOS</h1>
+    <div id="allIn">
+        <div id="container">
+            <div class="message" *ngFor="let message of movements">
+                <p>{{message}}</p>
+            </div>
+        </div>
+    </div>
+    <div id="buttons">
+        <div id="backMenu" class="button" (click)="changeWindow('')">IR AL MENU</div>
+        <div id="resetAll" class="button" (click)="resetMovements()">RESTABLECER MOVIMIENTOS</div>
+        <div id="balance" class="button" (click)="changeWindow('balance')">BALANCE</div>
+    </div>
+</body>
+</html>

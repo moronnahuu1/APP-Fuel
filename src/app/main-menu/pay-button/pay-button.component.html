@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <app-nav-bar></app-nav-bar>
+    <div id="form">
+        <label for="type">Tipo de pago</label>
+        <br>
+        <input type="text" name="type" id="typeInp" placeholder="Cheque, efectivo, transferencia, etc.">
+        <br>
+        <label for="amount">Monto del pago</label>
+        <br>
+        <input type="number" name="amount" id="amountInp" placeholder="MAXIMO: {{totalAmount}}" max="{{totalAmount}}">
+        <br>
+        <label for="reason">Motivo del pago</label>
+        <br>
+        <input type="text" name="reason" id="reasonInp" placeholder="Gastos del camion">
+        <br>
+        <button id="enter" (click)="pay()">PAGAR</button>
+    </div>
+    <div id="info">
+        <p id="amount" *ngIf="totalAmount>0">TOTAL A PAGAR: ${{totalAmount}}</p>
+        <p id="notAmount" *ngIf="totalAmount<=0">NO HAY CUENTAS A PAGAR</p>
+    </div>
+    <div id="buttons">
+        <div id="backMenu" class="button" (click)="changeWindow('')">IR AL MENU</div>
+        <div id="resetAll" class="button" (click)="resetPayments()">RESTABLECER PAGOS</div>
+        <div id="balance" class="button" (click)="changeWindow('balance')">BALANCE</div>
+    </div>
+</body>
+</html>

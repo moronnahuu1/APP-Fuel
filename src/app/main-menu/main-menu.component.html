@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <app-nav-bar></app-nav-bar>
+    <div id="ideas">
+        <div id="balance" class="addition">
+            <p id="firstP">balance</p>
+            <p id="fuelCant"></p>
+            <p id="amount"></p>
+            <p id="sellsAmount"></p>
+        </div>
+        <div id="lastMovements" class="addition" (click)="changeWindow('movements')">
+            <p id="firstP">Ultimos movimientos</p>
+            <div class="message" *ngFor="let message of movements.slice(0,3)">
+                <p>{{message}}</p>
+            </div>
+        </div>
+        <div class="addition">
+            <p id="firstP">Ultimos pagos realizados</p>
+            <div class="message" *ngFor="let payments of totalPayments.slice(0,2)">
+                <p>Monto: ${{formatNumber(payments.amount)}}</p>
+                <p>Motivo: {{payments.reason}}</p>
+            </div>
+        </div>
+    </div>
+    <div id="buttons">
+        <div id="InFuelButton" class="button" (click)="changeWindow('inFuel')">COMPRAR LITROS</div>
+        <div id="resetAll" class="button" (click)="resetAll()">RESTABLECER</div>
+        <div id="outFuelButton" class="button" (click)="changeWindow('outFuel')">VENDER LITROS</div>
+    </div>
+</body>
+</html>

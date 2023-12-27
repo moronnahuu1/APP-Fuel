@@ -1,0 +1,60 @@
+.button {
+    display: inline-block;
+    background-color: rgb(3, 186, 0);
+    width: fit-content;
+    padding: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.5s ease; /* Agrega una transición suave para una animación más agradable */
+}
+#buttons {
+    position: fixed;
+    bottom: 2%;
+}
+#outFuelButton {
+    position: fixed;
+    right: 10px
+}
+#ideas {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.button:hover {
+    color: rgb(0, 0, 0);
+    transform: scale(1.07); /* Escala el div al 120% del tamaño original */
+}
+#firstP{
+    border-bottom: 1px solid white;
+    font-family: 'f1Bold';
+}
+.addition{
+    width: 25%;
+    padding: 0.1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 7px;
+    font-family: 'f1Italic';
+    font-size: 15px;
+    cursor: pointer;
+    background: rgba(243, 243, 243, 0.5); /* Fondo blanco semitransparente */
+    backdrop-filter: blur(2px); /* Efecto de desenfoque */
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.3); /* Sombra con color semitransparente */
+    transition: transform 0.5s ease; /* Agrega una transición suave para una animación más agradable */
+}
+.addition:hover {
+    #firstP {
+        border-bottom: 1px solid rgb(0, 167, 186);
+    }
+    border: 1px solid rgb(0, 167, 186);
+    transform: scale(1.04); /* Escala el div al 120% del tamaño original */
+}
+.message {
+    border-bottom: 1px solid rgb(186, 186, 186);
+}
+#resetAll{position: fixed;
+    left: 45%;
+}

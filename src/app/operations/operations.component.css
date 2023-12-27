@@ -1,0 +1,53 @@
+#operations {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+#operation {
+    width: fit-content;
+    margin: 10px;
+    border: 1px solid grey;
+    border-radius: 10px;
+}
+p{
+    font-family: "f1Italic";
+    font-size: 13px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.button {
+    text-align: center;
+    display: inline-block;
+    background-color: rgb(3, 186, 0);
+    width: 130px;
+    padding: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.5s ease; /* Agrega una transición suave para una animación más agradable */
+}
+#buttons {
+    display: flex;
+    justify-content: space-evenly;
+    position: fixed;
+    bottom: 15px;
+}
+#balance {
+    position: fixed;
+    right: 10px;
+}
+#backMenu {
+    left: 10px;
+}
+.button:hover {
+    color: rgb(0, 0, 0);
+    background-color: white;
+    transform: scale(1.07); /* Escala el div al 120% del tamaño original */
+}
+#resetAll{
+    font-size: 12px;
+    position: fixed;
+    left: 45%;
+}

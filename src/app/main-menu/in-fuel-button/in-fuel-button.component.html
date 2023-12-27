@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Estilo para ocultar las flechas del input de tipo number */
+        input[type="number"] {
+          -moz-appearance: textfield; /* Firefox */
+          appearance: textfield; /* Estándar */
+        }
+    
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+          -webkit-appearance: none; /* Safari y Chrome */
+          margin: 0; /* Margen adicional */
+        }
+      </style>
+</head>
+<body>
+    <app-nav-bar></app-nav-bar>
+    <div id="container">
+        <div id="form">
+            <h1 id="compra">COMPRA DE COMBUSTIBLE</h1>
+            <br>
+            <input type="number" name="amount" id="amountInp" placeholder ="Cantidad de litros a comprar">
+            <br>
+            <input type="number" name="price" id="priceInp" placeholder="Precio por unidad (litro)">
+            <br>
+            <button id="enter" (click)="addLiters()">COMPRAR</button>
+        </div>
+    </div>
+    <div id="buttons">
+        <div id="backMenu" class="button" (click)="changeWindow('')">IR AL MENU</div>
+        <div id="balance" class="button" (click)="changeWindow('balance')">BALANCE</div>
+    </div>
+</body>
+</html>

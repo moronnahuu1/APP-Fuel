@@ -1,0 +1,46 @@
+#navBar{
+    margin-left: -20px;
+    z-index: 999; /* Asegura que la barra de navegación esté sobre otros elementos de la página */
+    width: 103%; /* Asegura que la barra de navegación ocupe todo el ancho */
+    height: 80px;
+    background-image: url('..//..//..//assets/4855443.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
+#navBar div {
+    display: inline-block;
+    margin-top: 30px;
+    text-decoration: none; /* Quita la subrayado de los enlaces */
+    color: #000000; /* Color de los enlaces cuando no se les pasa el mouse por encima */
+    transition: color 0.3s; /* Agrega una transición suave de color */
+    cursor: pointer;
+    margin-right: 7%;
+    font-size: 18px;
+    font-family: "f1Bold";
+    transition: transform 0.5s ease; /* Agrega una transición suave para una animación más agradable */
+}
+
+#navBar div:hover {
+    color: #1ba300; /* Cambia el color cuando el mouse pasa por encima */
+    transform: scale(1.07); /* Escala el div al 120% del tamaño original */
+  }
+
+/* Media query para pantallas más pequeñas, ajusta el tamaño del texto y el espaciado entre enlaces */
+@media only screen and (max-width: 600px) {
+    #navBar div {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+
+/* Media query para pantallas medianas, ajusta el tamaño del texto y el espaciado entre enlaces */
+@media only screen and (min-width: 601px) and (max-width: 1024px) {
+    #navBar div {
+        font-size: 16px;
+        padding: 10px 15px;
+    }
+}

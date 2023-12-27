@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Estilo para ocultar las flechas del input de tipo number */
+        input[type="number"] {
+          -moz-appearance: textfield; /* Firefox */
+          appearance: textfield; /* Estándar */
+        }
+    
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+          -webkit-appearance: none; /* Safari y Chrome */
+          margin: 0; /* Margen adicional */
+        }
+      </style>
+</head>
+<body>
+    <app-nav-bar></app-nav-bar>
+    <div id="buttons2">
+        <div id="freight" class="button" (click)="SellLiters('FreightForm', 'personalForm')">FLETE ESTACION</div>
+        <div id="personal" class="button" (click)="SellLiters('personalForm', 'FreightForm')">VENTA PERSONAL</div>
+    </div>
+    <div id="container">
+        <div id="personalForm" class="form" style="display: none;">
+            <h1 class="ventas">VENTA PERSONAL</h1>
+            <br>
+            <input type="number" name="amount" id="amountInp" placeholder="Cantidad de litros a vender">
+            <br>
+            <input type="number" name="costPrice" id="costPriceInp" placeholder="Costo por unidad (litro)">
+            <br>
+            <input type="number" name="price" id="priceInp" placeholder="Precio de venta">
+            <br>
+            <button id="enter" (click)="personalSells()">VENDER</button>
+        </div>
+        <div id="FreightForm" class="form" style="display: none;">
+            <h1 class="ventas">VENTA PARA LA ESTACION</h1>
+            <br>
+            <input type="number" name="amount" id="FreightamountInp" placeholder="Cantidad de litros a vender">
+            <br>
+            <input type="number" name="Freightprice" id="FreightpriceInp" placeholder="Precio de venta">
+            <br>
+            <input type="number" name="moneyXliter" id="moneyXliterInp" placeholder="Ganancia por litro">
+            <br>
+            <button id="enter" (click)="gasStationSells()">VENDER</button>
+        </div>
+    </div>
+    <h1 id="hola"></h1>
+    <div id="buttons">
+        <div id="backMenu" class="button" (click)="changeWindow('')">IR AL MENU</div>
+        <div id="resetAll" class="button" (click)="resetSellsAmount()">RESTABLECER DINERO DE VENTAS</div>
+        <div id="balance" class="button" (click)="changeWindow('balance')">BALANCE</div>
+    </div>
+</body>
+</html>
