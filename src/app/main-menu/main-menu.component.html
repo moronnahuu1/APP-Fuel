@@ -17,7 +17,7 @@
         <div id="lastMovements" class="addition" (click)="changeWindow('movements')">
             <p id="firstP">Ultimos movimientos</p>
             <div class="message" *ngFor="let message of movements.slice(0,3)">
-                <p>{{message}}</p>
+                <p>{{getDayInfo(message.currentDate)}}{{message.message}}</p>
             </div>
         </div>
         <div class="addition">

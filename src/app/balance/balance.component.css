@@ -1,7 +1,8 @@
 .button {
+    text-align: center;
     display: inline-block;
-    background-color: red;
-    width: fit-content;
+    background-color: rgb(3, 186, 0);
+    width: 130px;
     padding: 20px;
     padding-left: 10px;
     padding-right: 10px;
@@ -9,15 +10,76 @@
     cursor: pointer;
     transition: transform 0.5s ease; /* Agrega una transición suave para una animación más agradable */
 }
-#buttons {
-    position: fixed;
-    bottom: 2%;
+#resetAll{
+    width: 260px;
+}
+#balance{
+    text-align: center;
 }
 .button:hover {
-    color: rgb(113, 0, 0);
+    color: rgb(0, 0, 0);
     transform: scale(1.07); /* Escala el div al 120% del tamaño original */
 }
-#resetAll{
-    position: fixed;
-    left: 45%;
+
+.addition{
+    width: 25%;
+    padding: 0.1px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px solid rgb(221, 221, 221);
+    border-radius: 7px;
+    font-family: 'f1Italic';
+    font-size: 15px;
+    cursor: pointer;
+    background: rgba(243, 243, 243, 0.5); /* Fondo blanco semitransparente */
+    backdrop-filter: blur(2px); /* Efecto de desenfoque */
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.3); /* Sombra con color semitransparente */
+    transition: transform 0.5s ease; /* Agrega una transición suave para una animación más agradable */
+}
+.addition:hover {
+    #firstP {
+        border-bottom: 1px solid rgb(0, 167, 186);
+    }
+    border: 1px solid rgb(0, 167, 186);
+    transform: scale(1.04); /* Escala el div al 120% del tamaño original */
+}
+.inline{
+    display: flex;
+    justify-content: space-evenly;
+}
+.total{
+    text-align: center;
+    margin-bottom: 0;
+}
+#ALL{
+    display: flex;
+    justify-content: space-evenly;
+}
+#buttons {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 5%;
+}
+#profitMessages{
+    height: 200px;
+    max-height: 200px;
+    width: 370px;
+}
+#profitText{
+    border-bottom: 1px solid rgb(255, 255, 255);
+}
+#profitDiv{
+    margin-left: 523px;
+    width: fit-content;
+}
+#profitTitle{
+    text-align: center;
+}
+#profitButton{
+    background-color: red;
+    margin-top: 10px;
+}
+#seeOldProfits{
+    width: 160px;
+    margin-left: 60px;
 }

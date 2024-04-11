@@ -65,8 +65,19 @@
     padding-bottom: 25%;
     border-radius: 10px;
     border: 2px solid rgb(176, 176, 176);
+    position: relative;
 }
 #compra {
     border-bottom: 1px solid white;
     padding-bottom: 10px;
+}
+#amount {
+    position: absolute;
+    top: 120px; /* Ajusta la posición superior según sea necesario */
+    left: 10px;
+}
+#price {
+    position: absolute;
+    top: 200px; /* Ajusta la posición superior según sea necesario */
+    left: 10px;
 }

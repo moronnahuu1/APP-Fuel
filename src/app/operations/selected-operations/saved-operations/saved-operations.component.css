@@ -1,0 +1,102 @@
+#selectTitle{
+    background-color: rgb(43, 43, 47);
+    background: rgba(63, 61, 61, 0.5); /* Fondo blanco semitransparente */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque */
+    box-shadow: 0 0 50px rgba(0, 0, 0, 1); /* Sombra con color semitransparente */
+    width: 550px;
+    padding: 10px;
+    padding-bottom: 20%;
+    border-radius: 10px;
+    border: 2px solid rgb(176, 176, 176);
+    position: relative;
+    transition: transform 0.5s ease; /* Agrega una transición suave para una animación más agradable */
+    overflow-y: auto;
+    overflow-x: auto;
+    height: 100px;
+    text-align: center;
+    margin-top: 30px;
+    margin-left: 430px;
+}
+#selectTitle:hover {
+    transform: scale(1.02); /* Escala el div al 120% del tamaño original */
+}
+#select{
+    text-align: center;
+}
+#operation {
+    width: fit-content;
+    margin: 10px;
+    border: 1px solid grey;
+    border-radius: 10px;
+    height: 225px;
+    font-size: 15px;
+}
+#operation p {
+    margin-left: 10px;
+}
+#selectedToSee {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    border: 1px solid grey;
+    border-radius: 10px;
+    overflow-y: auto;
+    overflow-x: auto;
+    height: 400px;
+    margin-top: -15px;
+}
+#nameSelected{
+    border-bottom: 1px solid white;
+    cursor: pointer;
+}
+#nameSelected:hover{
+    color: rgb(204, 255, 0);
+}
+#information{
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 15px;
+    margin-top: 0px;
+    text-align: center;
+}
+.textInfo{
+    flex-direction: column;
+    border: 1px solid white;
+    border-radius: 10px;
+    background: rgba(243, 243, 243, 0.5); /* Fondo blanco semitransparente */
+    backdrop-filter: blur(2px); /* Efecto de desenfoque */
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.3); /* Sombra con color semitransparente */
+    color: black;
+}
+.textInfo p {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+#resume{
+    text-align: center;
+}
+#titleSelected{
+    text-align: center;
+    margin-top: -5px;
+}
+.button {
+    text-align: center;
+    display: inline-block;
+    background-color: rgb(3, 186, 0);
+    width: 130px;
+    padding: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: transform 0.5s ease; /* Agrega una transición suave para una animación más agradable */
+}
+.button:hover {
+    color: rgb(0, 0, 0);
+    background-color: white;
+    transform: scale(1.07); /* Escala el div al 120% del tamaño original */
+}
+#buttons {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 30px;
+}

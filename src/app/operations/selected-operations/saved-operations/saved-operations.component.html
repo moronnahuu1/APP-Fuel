@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <app-nav-bar></app-nav-bar>
+    <h1 id="select">SELECCIONE UNA RUTINA GUARDADA</h1>
+    <div id="selectTitle">
+        <div id="title" *ngFor="let selected of storagedOperations">
+            <p id="nameSelected" (click)="watch(selected)">{{selected.nameSelected.toUpperCase()}}</p>
+        </div>
+    </div>
+    <h1 id="titleSelected" style="display: none;">{{selectedToSee?.nameSelected?.toUpperCase()}}</h1>
+    <div id="selectedToSee" style="display: none;">
+        <div id="operation" *ngFor="let operationAux of selectedToSee?.operations">
+            <p>Cantidad de litros: {{formatNumber(operationAux.fuelAmount)}}</p>
+            <p>Precio por litro: {{formatNumber(operationAux.fuelPrice)}}</p>
+            <p>Fecha: {{operationAux.actualDate}}</p>
+            <p>Tipo de operacion: {{operationAux.type}}</p>
+            <p>Precio total de la operacion: ${{formatNumber(operationAux.totalPrice)}}</p>
+            <p *ngIf="operationAux.type == 'venta'">Ganancia: ${{operationAux.profit?.toFixed(2)}}</p>
+        </div>
+    </div>
+    <h1 id="resume" style="display: none;">RESUMEN</h1>
+    <div id="information" style="display: none;">
+        <div id="fuelRegister" class="textInfo">
+            <p>COMBUSTIBLE TOTAL (E/S): {{totalFuelMoved}} LITROS</p>
+            <p>INGRESO DE COMBUSTIBLE: {{totalFuelBought}} LITROS</p>
+            <p>SALIDA DE COMBUSTIBLE: {{totalFuelSold}} LITROS</p>
+            <p>MARGEN TOTAL: {{marginFuel}} LITROS</p>
+        </div>
+        <div id="movements" class="textInfo">
+            <p>TOTAL DE OPERACIONES: {{totalCount}}</p>
+            <p>TOTAL DE COMPRAS: {{buyCount}}</p>
+            <p>TOTAL DE VENTAS: {{sellCount}}</p>
+        </div>
+        <div id="bests&media" class="textInfo">
+            <p>MEJOR VENTA: {{bestSell.fuelAmount}} LITROS</p>
+            <p>PEOR VENTA: {{worstSell.fuelAmount}} LITROS</p>
+
+            <p>MAYOR COMPRA: {{biggestBuy.fuelAmount}} LITROS</p>
+            <p>MENOR COMPRA: {{lowestBuy.fuelAmount}} LITROS</p>
+        </div>
+        <div id="profits" class="textInfo">
+            <p>GANANCIA TOTAL: ${{formatNumber(totalProfit)}}</p>
+            <p>MAYOR GANANCIA: ${{formatNumber(biggestProfit)}}</p>
+            <p>MENOR GANANCIA: ${{formatNumber(lowestProfit)}}</p>
+            <p>GANANCIA PROMEDIO: ${{formatNumber(mediaProfit)}}</p>
+        </div>
+    </div>
+    <div id="buttons">
+        <div id="backMenu" class="button" (click)="changeWindow('')">MENU</div>
+        <div id="save" class="button" (click)="reload()">LISTADO</div>
+    </div>
+</body>
+</html>

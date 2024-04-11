@@ -1,4 +1,9 @@
+import { numberAttribute } from "@angular/core";
 import { payment } from "./payment";
+import { operation } from "./operation";
+import { count } from "rxjs";
+import { selectedOperations } from "./selectedOperations";
+import { message } from "./message";
 
 export class GlobalFunctions{
     static getTotalProfit() {
@@ -18,14 +23,96 @@ export class GlobalFunctions{
         console.log("PROFIT FROM GET TOTAL PROFIT: "+ profit);
         return profit;
       }
-    static getTotalFuel(){
+    static getTotalFuel(): number{
     let fuelLevel = localStorage.getItem("totalFuel");
     if(fuelLevel){
-      let fuelDoc = document.getElementById("fuelCant");
-      if(fuelDoc){
-        fuelDoc.innerHTML = this.formatNumber(JSON.parse(fuelLevel)) + " Litros adquiridos";
+      let fuelLevelAux: number = parseInt(fuelLevel);
+      return fuelLevelAux;
+    }else{
+      return 0;
+    }
+  }
+  static getOperations(): Array<operation>{
+    let operationsValues: Array<operation> = [];
+    let operations = localStorage.getItem("operations");
+    console.log(operations);
+    if(operations){
+      operationsValues = JSON.parse(operations);
+    }
+    return operationsValues;
+  }
+
+  static getSelectedOperations():  Array<selectedOperations>{
+    let selectedOperations: Array<selectedOperations> = [];
+    let selectedOpAux = localStorage.getItem("selectedOperations");
+    if(selectedOpAux){
+      selectedOperations = JSON.parse(selectedOpAux);
+    }
+    return selectedOperations;
+  }
+
+  static getSpecificOperations(type: string): Array<operation>{
+    let operations = this.getOperations();
+    let specificOperations: Array<operation> = [];
+
+    let firstOpStoraged = localStorage.getItem("firstOperationSelected");
+    let firstOperation: operation = new operation(0,0,',', new Date());
+
+    let lastOpSelected = localStorage.getItem("lastOperationSelected");
+    let lastOperation: operation = new operation(0,0,',',new Date());
+
+    if(firstOpStoraged){
+      firstOperation = JSON.parse(firstOpStoraged);
+    }
+    if(lastOpSelected){
+      lastOperation = JSON.parse(lastOpSelected);
+    }
+    if(operations.length>0){
+      if(firstOperation.id > lastOperation.id){ ///INVIERTO EL LUGAR PARA EL FOR
+        let operationAux = firstOperation;
+        firstOperation = lastOperation;
+        lastOperation = operationAux;
+      }
+      for(let i=0; i<operations.length; i++){
+        if(operations[i].id>=firstOperation.id && operations[i].id<=lastOperation.id){
+          if(type == "all"){
+            specificOperations.unshift(operations[i]);
+          }else{
+            if(operations[i].type == type){
+              specificOperations.unshift(operations[i]);
+            }
+          }
+        }
       }
     }
+    return specificOperations;
+  }
+
+  static countTypeOperations(type: string): number{
+    let operationsValues: Array<operation> = this.getOperations();
+    let counter: number = 0;
+    if(operationsValues){
+      for(let i=0; i<operationsValues.length; i++){
+        if(operationsValues[i].type == type){
+          counter += 1;
+        }
+      }
+    }
+    return counter;
+  }
+  static biggestOperationType(type: string): operation{
+    let operationsValues: Array<operation> = this.getOperations();
+    let biggestOp: operation = operationsValues[0];
+    if(operationsValues){
+      for(let i=0; i<operationsValues.length; i++){
+        if(operationsValues[i].type == type){
+          if(operationsValues[i].fuelAmount > biggestOp.fuelAmount){
+            biggestOp = operationsValues[i];
+          }
+        }
+      }
+    }
+    return biggestOp;
   }
   static getTotalAmount(){
     let totalAmount = localStorage.getItem("totalAmount");
@@ -50,14 +137,23 @@ export class GlobalFunctions{
         amountSell.innerHTML = "Dinero en cuenta: $"+this.formatNumber(sellsAmount);
       }
     }
+    return sellsAmount;
   }
-  static getMovements(): Array<string>{
-    let movements: Array<string> = [];
+  static getMovements(): Array<message>{
+    let movements: Array<message> = [];
     let historial = localStorage.getItem("movements");
     if(historial){
       movements = JSON.parse(historial);
     }
     return movements;
+  }
+  static getFuelRegister(): Array<operation>{
+    let fuelXprice: Array<operation> = [];
+    let opAux = localStorage.getItem("fuelXprice");
+    if(opAux){
+      fuelXprice = JSON.parse(opAux);
+    }
+    return fuelXprice;
   }
   static getPayments(): Array<payment>{
     let totalPayments: Array<payment> = [];
@@ -113,10 +209,46 @@ export class GlobalFunctions{
       miDiv.style.display = 'block';
     }
   }
+  static displayGrid(name: string){
+    let miDiv = document.getElementById(name);
+    if(miDiv){
+      miDiv.style.display = 'grid';
+    }
+  }
+
+  static displayFlex(name: string){
+    let miDiv = document.getElementById(name);
+    if(miDiv){
+      miDiv.style.display = 'flex';
+    }
+  }
+
   static displayNone(name: string){
     let miDiv = document.getElementById(name);
     if(miDiv){
       miDiv.style.display = 'none';
     }
+  }
+  static changeButtonStyle(name: string, type: string){
+    let miButton = document.getElementById(name);
+    if(miButton){
+      if(type == "selected"){
+        miButton.style.backgroundColor = 'grey';
+        miButton.style.color = 'black';
+      }else{
+        if(type == "reset"){
+          miButton.style.backgroundColor = 'rgb(29, 157, 0)';
+          miButton.style.color = 'white';
+        }
+      }
+    }
+  }
+  static getProfitMessages(){
+    let messageAux = localStorage.getItem("profitMessages");
+    let messages: Array<String> = [];
+    if(messageAux){
+      messages = JSON.parse(messageAux);
+    }
+    return messages;
   }
 }

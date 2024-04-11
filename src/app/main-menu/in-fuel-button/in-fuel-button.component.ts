@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { GlobalFunctions } from 'src/app/models/GlobalFunctions';
 import { operation } from 'src/app/models/operation';
+import { format } from 'date-fns';
+import { message } from 'src/app/models/message';
 
 @Component({
   selector: 'app-in-fuel-button',
@@ -10,14 +13,20 @@ export class InFuelButtonComponent {
   addLiters(){
     let fuel = this.actualizeFuel();
     let price = this.actualizeTotalAmount(fuel);
-    let message = "Compra de " + this.formatNumber(fuel) + " litros al precio de $" + this.formatNumber(price) + "     " + this.getLocalDate();
-    this.historialUpdate(message);
-    let newOperation = new operation(fuel, price, "compra");
+    let dateAux = document.getElementById("dateInp") as HTMLInputElement;
+    let dateInput: Date = new Date();
+    if(dateAux){
+      dateInput = new Date(dateAux.value);
+    }
+    let messageAux = new message(` | Compra de ${this.formatNumber(fuel)} litros al precio de $${this.formatNumber(price)}`, dateInput);
+    this.historialUpdate(messageAux);
+    let newOperation = new operation(fuel, price, "compra", dateInput);
     let operations: Array<operation> = [];
     let operationStorage = localStorage.getItem("operations");
     if(operationStorage){
       operations = JSON.parse(operationStorage);
     }
+    newOperation.id = operations.length;
     operations.unshift(newOperation);
     localStorage.setItem("operations", JSON.stringify(operations));
     this.fuelXpriceActualize(price,fuel,newOperation);
@@ -101,9 +110,9 @@ export class InFuelButtonComponent {
     console.log("amount actualized");
     return price;
   }
-  historialUpdate(message: string){
+  historialUpdate(message: message){
     let historial = localStorage.getItem("movements");
-    let movements: Array<string> = [];
+    let movements: Array<message> = [];
     if(historial){
       movements = JSON.parse(historial);
     }
@@ -115,5 +124,28 @@ export class InFuelButtonComponent {
   }
   formatNumber(number: number): string {
     return number.toLocaleString(); // Esto añadirá separadores de miles
+  }
+  displayLabel(name: string, nameInp: string){
+    let miInp = document.getElementById(nameInp) as HTMLInputElement;
+    if(miInp){
+      if(miInp.value && miInp.value.trim() !== ""){
+        GlobalFunctions.displayBlock(name);
+      }else{
+        GlobalFunctions.displayNone(name);
+      }
+    }
+  }
+  mostrarOcultarLabel(name: string, nameInp: string) {
+    var input = document.getElementById(nameInp) as HTMLInputElement;
+    var labelResultado = document.getElementById(name);
+    if(input){
+      if(labelResultado){
+        if (input.value && input.value.trim() !== "") {
+          labelResultado.style.display = 'block';
+        } else {
+          labelResultado.style.display = 'none';
+        }
+      }
+    }
   }
 }

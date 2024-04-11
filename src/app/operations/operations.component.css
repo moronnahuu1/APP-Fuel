@@ -1,14 +1,22 @@
-#operations {
+.operations {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     border: 1px solid grey;
     border-radius: 10px;
+    overflow-y: auto;
+    overflow-x: auto;
+    height: 450px;
+}
+#nameOp{
+    text-align: center;
 }
 #operation {
     width: fit-content;
     margin: 10px;
     border: 1px solid grey;
     border-radius: 10px;
+    position: relative;
+
 }
 p{
     font-family: "f1Italic";
@@ -50,4 +58,49 @@ p{
     font-size: 12px;
     position: fixed;
     left: 45%;
+}
+#navButtons{
+    display: flex;
+    justify-content: center;
+}
+.navButton{
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 15px;
+    background-color: rgb(29, 157, 0);
+    padding: 5px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: transform 0.5s ease; /* Agrega una transición suave para una animación más agradable */
+}
+.navButton:hover{
+    transform: scale(1.04); /* Escala el div al 120% del tamaño original */
+}
+#selectedOperations{
+    background-color: grey;
+    color: black;
+}
+#boughtOperations{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+.selectedOP{
+    background: 
+    rgba(0, 242, 255, 0.5); /* Fondo blanco semitransparente */
+    backdrop-filter: blur(2px); /* Efecto de desenfoque */
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.3); /* Sombra con color semitransparente */
+    color: black;
+    
+}
+.storagedOp{
+    background: 
+    linear-gradient(to bottom right, transparent calc(100% - 20px), rgb(8, 0, 165) calc(100% - 20px), rgb(8, 0, 165)), /* Raya diagonal en la esquina inferior izquierda */
+    rgba(243, 243, 243, 0.5); /* Fondo blanco semitransparente */
+    backdrop-filter: blur(2px); /* Efecto de desenfoque */
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.3); /* Sombra con color semitransparente */
+    color: black;
+}
+#selectOperations{
+    margin-top: 30px;
+    margin-left: 644px;
 }

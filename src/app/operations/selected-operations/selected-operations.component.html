@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <app-nav-bar></app-nav-bar>
+    <div id="titleSave" style="display: none;">
+        <label for="nameSave">INGRESE EL NOMBRE CON EL QUE DESEA GUARDAR LAS OPERACIONES</label>
+        <br>
+        <div id="inputButton">
+            <input type="text" name="nameSave" id="nameSaveInp" placeholder="ejemplo">
+            <div id="buttonSave" class="button" (click)="saveOperations()">GUARDAR</div>
+        </div>
+    </div>
+    <div id="allOperations" class="operations">
+        <div id="operation" *ngFor="let operationAux of operationValues">
+            <p>Cantidad de litros: {{formatNumber(operationAux.fuelAmount)}}</p>
+            <p>Precio por litro: {{formatNumber(operationAux.fuelPrice)}}</p>
+            <p>Fecha: {{operationAux.actualDate}}</p>
+            <p>Tipo de operacion: {{operationAux.type}}</p>
+            <p>Precio total de la operacion: ${{formatNumber(operationAux.totalPrice)}}</p>
+            <p *ngIf="operationAux.type == 'venta'">Ganancia: ${{operationAux.profit?.toFixed(2)}}</p>
+        </div>
+    </div>
+    <h1 id="resume">RESUMEN</h1>
+    <div id="information">
+        <div id="fuelRegister" class="textInfo">
+            <p>COMBUSTIBLE TOTAL (E/S): {{totalFuelMoved}} LITROS</p>
+            <p>INGRESO DE COMBUSTIBLE: {{totalFuelBought}} LITROS</p>
+            <p>SALIDA DE COMBUSTIBLE: {{totalFuelSold}} LITROS</p>
+            <p>MARGEN TOTAL: {{marginFuel}} LITROS</p>
+        </div>
+        <div id="movements" class="textInfo">
+            <p>TOTAL DE OPERACIONES: {{totalCount}}</p>
+            <p>TOTAL DE COMPRAS: {{buyCount}}</p>
+            <p>TOTAL DE VENTAS: {{sellCount}}</p>
+        </div>
+        <div id="bests&media" class="textInfo">
+            <p>MEJOR VENTA: {{bestSell.fuelAmount}} LITROS</p>
+            <p>PEOR VENTA: {{worstSell.fuelAmount}} LITROS</p>
+
+            <p>MAYOR COMPRA: {{biggestBuy.fuelAmount}} LITROS</p>
+            <p>MENOR COMPRA: {{lowestBuy.fuelAmount}} LITROS</p>
+        </div>
+        <div id="profits" class="textInfo">
+            <p>GANANCIA TOTAL: ${{formatNumber(totalProfit)}}</p>
+            <p>MAYOR GANANCIA: ${{formatNumber(biggestProfit)}}</p>
+            <p>MENOR GANANCIA: ${{formatNumber(lowestProfit)}}</p>
+            <p>GANANCIA PROMEDIO: ${{formatNumber(mediaProfit)}}</p>
+        </div>
+    </div>
+    <div id="buttons">
+        <div id="backMenu" class="button" (click)="changeWindow('')">MENU</div>
+        <div id="save" class="button" (click)="displayChange('titleSave', 'block')">GUARDAR</div>
+        <div id="seeOld" class="button" (click)="changeWindow('savedSelectedOperations')">VER GUARDADOS</div>
+    </div>
+</body>
+</html>

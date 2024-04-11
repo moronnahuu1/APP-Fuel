@@ -1,3 +1,4 @@
+import { verifyHostBindings } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { GlobalFunctions } from 'src/app/models/GlobalFunctions';
 import { payment } from 'src/app/models/payment';
@@ -13,10 +14,11 @@ export class PayButtonComponent implements OnInit{
   amountSells: number = 0;
   ngOnInit(): void {
     this.totalAmount = GlobalFunctions.getTotalAmount();
+    this.amountSells = GlobalFunctions.getAmountSells();
   }
   pay(){
     let type = this.getType();
-    let amount = this.getAmount();
+    let amount = this.getAmount();    
     let reason = this.getReason();
     let access = this.verifyAmount(amount);
     if(access == 1){
@@ -28,7 +30,7 @@ export class PayButtonComponent implements OnInit{
       localStorage.setItem("totalPayments", JSON.stringify(this.totalPayments));
       localStorage.setItem("totalAmount", JSON.stringify(this.totalAmount));
       localStorage.setItem("amountSells", JSON.stringify(this.amountSells));
-      let message = "Pago de $" +GlobalFunctions.formatNumber(amount)+ " realizado en concepto de " +reason + "    " + this.getLocalDate();
+      let message = this.getLocalDate() + " | Pago de $" +GlobalFunctions.formatNumber(amount)+ " realizado en concepto de " +reason;
       this.historialUpdate(message);
       window.location.href = '';
     }else{
@@ -62,7 +64,7 @@ export class PayButtonComponent implements OnInit{
     if(input){
         let amountValue = input.value;
         amount = parseFloat(amountValue);
-    }
+    }    
     return amount;
   }
   getReason(): string {
@@ -73,13 +75,10 @@ export class PayButtonComponent implements OnInit{
     }
     return reason;
   }
-  verifyAmount(amount: number): number{
-    let number = -3;
-    let amountSellsStorage = localStorage.getItem("amountSells");
-    if(amountSellsStorage){
-      let amountSellsAux = JSON.parse(amountSellsStorage);
-      this.amountSells = parseFloat(amountSellsAux);
-      if(amount<=this.amountSells){
+  verifyAmount(amount: any): number{
+    let number = -2;    
+    if(amount!=null){
+      if(amount<=this.amountSells){        
         if(amount>0){
           if(amount <= this.totalAmount){
             number = 1; ///TODO BIEN
@@ -92,7 +91,7 @@ export class PayButtonComponent implements OnInit{
       }else{
         number = -1; /// EL MONTO INGRESADO SUPERA EL TOTAL RECAUDADO EN LAS VENTAS
       }
-    }
+  }
     return number;
   }
   getLocalDate(): string {
@@ -123,5 +122,38 @@ export class PayButtonComponent implements OnInit{
   }
   changeWindow(name: string){
     window.location.href = name;
+  }
+  formatNumber(number: number): string {
+    return number.toLocaleString(); // Esto añadirá separadores de miles
+  }
+  changeInput(){
+    let miInp = document.getElementById("amountInp") as HTMLInputElement;
+    if(miInp){
+      miInp.value = "" + this.formatNumber(this.totalAmount);
+      miInp.placeholder = "" + this.formatNumber(this.totalAmount);
+    }
+  }
+  displayAdd(name: string, type: string){
+    if(type == 'block'){
+      GlobalFunctions.displayBlock(name);
+    }else{
+      if(type == 'none'){
+        GlobalFunctions.displayNone(name);
+      }
+    }
+  }
+  addCash(){
+    let inputMoney = document.getElementById("addAmountInp") as HTMLInputElement;
+    let moneyToAdd = 0;
+    if(inputMoney){
+      moneyToAdd = parseFloat(inputMoney.value);
+      let totalAmountAux = GlobalFunctions.getAmountSells();
+      totalAmountAux += moneyToAdd;
+      localStorage.removeItem("amountSells");
+      localStorage.setItem("amountSells", JSON.stringify(totalAmountAux));
+      alert("Se agregaron $"+this.formatNumber(moneyToAdd)+" a la cuenta");
+      this.displayAdd("addMoney", "none");
+      location.reload();
+    }
   }
 }

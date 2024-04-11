@@ -13,6 +13,9 @@ import { BalanceComponent } from './balance/balance.component';
 import { PayButtonComponent } from './main-menu/pay-button/pay-button.component';
 import { OperationsComponent } from './operations/operations.component';
 import { FuelRegisterComponent } from './fuel-register/fuel-register.component';
+import { SelectedOperationsComponent } from './operations/selected-operations/selected-operations.component';
+import { SavedOperationsComponent } from './operations/selected-operations/saved-operations/saved-operations.component';
+import { ModifyComponent } from './operations/modify/modify.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +30,9 @@ import { FuelRegisterComponent } from './fuel-register/fuel-register.component';
     PayButtonComponent,
     OperationsComponent,
     FuelRegisterComponent,
+    SelectedOperationsComponent,
+    SavedOperationsComponent,
+    ModifyComponent,
   ],
   imports: [
     BrowserModule,

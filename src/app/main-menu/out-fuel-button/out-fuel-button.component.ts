@@ -1,6 +1,8 @@
 import { ParseFlags } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { GlobalFunctions } from 'src/app/models/GlobalFunctions';
+import { fuelXprice } from 'src/app/models/fuelXprice';
+import { message } from 'src/app/models/message';
 import { operation } from 'src/app/models/operation';
 
 @Component({
@@ -57,32 +59,73 @@ export class OutFuelButtonComponent {
       operations = JSON.parse(operationStorage);
     }
     let amount = this.readFuel("amountInp");
-    let costPrice = this.inputCostPrice();
-    let access = this.searchCostPrice(costPrice, amount);
-    if(access == 0){      
-      alert("Ingrese un costo que se encuentre registrado");
-      location.reload();
-    }else {
-      if(access == -1){
-      alert("No tiene suficientes litros a ese costo");
-      location.reload();
-      }else {
-    this.actualizeFuel(amount);
-    let price = this.actualizeTotalAmount(amount, "priceInp");
-    let message = "venta de " + this.formatNumber(amount) + " litros al precio de $" + this.formatNumber(price) + "     " + this.getLocalDate();
-    this.historialUpdate(message);
-    let newOperation = new operation(amount, price, "venta");
-    newOperation.profit = this.calculateProFit(amount, price, costPrice);
-    let totalProfit = GlobalFunctions.getTotalProfit();    
-    totalProfit += newOperation.profit;
-    console.log("PROFIT TOTAL: "+totalProfit);
-    localStorage.setItem("profit", JSON.stringify(totalProfit));
-    operations.unshift(newOperation);
-    localStorage.setItem("operations", JSON.stringify(operations));
-    this.fuelXpriceActualize(costPrice, amount, newOperation);
+    let costPrice = this.searchOldestPrice();
+    let dateAux = document.getElementById("dateInp") as HTMLInputElement;
+    let dateInput: Date = new Date();
+    if(dateAux){
+      dateInput = new Date(dateAux.value);
     }
+    let mediaCostPrice = 0;
+    let costPriceArray: Array<number> = [];
+    mediaCostPrice = this.checkOldestPriceAmount(costPrice, amount, costPriceArray);
+    if(mediaCostPrice != 0){
+      let price = this.actualizeTotalAmount(amount, "priceInp");
+      let messageAux = new message(` | Venta de ${this.formatNumber(amount)} litros al precio de $${this.formatNumber(price)}`, dateInput);
+      this.historialUpdate(messageAux);
+      let newOperation = new operation(amount, price, "venta", dateInput);
+      newOperation.profit = this.calculateProFit(amount, price, mediaCostPrice);
+      newOperation.id = operations.length;
+      let totalProfit = GlobalFunctions.getTotalProfit();    
+      totalProfit += newOperation.profit;
+      localStorage.setItem("profit", JSON.stringify(totalProfit));
+      operations.unshift(newOperation);
+      localStorage.setItem("operations", JSON.stringify(operations));
+    }
+    window.location.href = '';
   }
-  window.location.href = '';
+  checkOldestPriceAmount(costPrice: number, fuelAmount: number, costPriceArray: Array<number>){
+    let operations: Array<operation> = [];
+    let opAux = localStorage.getItem("fuelXprice");
+    if(opAux){
+      operations = JSON.parse(opAux);
+    }
+    let position = -1;
+    for(let i=0; i<operations.length; i++){
+      if(operations[i].fuelPrice == costPrice){
+        position = i;
+      }
+    }
+    if(position>=0){
+      if(operations[position].fuelAmount >= fuelAmount){
+        let totalOperationPrice = (fuelAmount*costPrice);
+        costPriceArray.push(totalOperationPrice);
+        this.fuelXpriceActualize(costPrice, fuelAmount);
+        this.actualizeFuel(fuelAmount);
+        let allCostPrices = 0;
+        for(let i=0; i<costPriceArray.length; i++){
+          allCostPrices += costPriceArray[i];
+        }
+        return allCostPrices;
+      }else{
+        let difference = fuelAmount-operations[position].fuelAmount;
+        if(position>0){
+          let newCostPrice = this.searchPriceBefore(position);
+          let check: number = this.checkOldestPriceAmount(newCostPrice, difference, costPriceArray);
+          if(check != 0){ 
+            this.fuelXpriceActualize(costPrice, operations[position].fuelAmount);
+            this.actualizeFuel(operations[position].fuelAmount);
+            let fuelDifference = fuelAmount-difference;
+            check += (fuelDifference*costPrice);
+          }
+          return check;
+        }else{
+          alert("No hay suficientes litros");
+          return 0;
+        }
+      }
+    }else{
+      return 0;
+    }
   }
   gasStationSells(){
     let operations: Array<operation> = [];
@@ -90,11 +133,16 @@ export class OutFuelButtonComponent {
     if(operationStorage){
       operations = JSON.parse(operationStorage);
     }
+    let dateAux = document.getElementById("freightDateInp") as HTMLInputElement;
+    let dateOp: Date = new Date();
+    if(dateAux){
+      dateOp = new Date(dateAux.value);
+    }    
     let moneyXliter = this.getMoneyXliter();
     if(moneyXliter>0){
     let amount = this.readFuel("FreightamountInp"); /// CANTIDAD DE LITROS INGRESADOS POR USUARIO
     console.log("AMOUNT: "+ amount);
-    let costPrice = this.searchOldestPrice(operations); /// COSTO DE CADA LITRO MAS VIEJO
+    let costPrice = this.searchOldestPrice(); /// COSTO DE CADA LITRO MAS VIEJO
     console.log("COSTPRICE: "+ costPrice);
     let access = this.searchCostPrice(costPrice, amount); ///VERIFICA SI EL COSTO EXISTE
     if(access == 0){      
@@ -110,26 +158,26 @@ export class OutFuelButtonComponent {
     let currentProfit = this.calculateProFitFreight(moneyXliter, amount);
     let price = this.actualizeTotalAmountFreight(amount, currentProfit); /// PRICE ES EL PRECIO DE VENTA INGRESADO POR EL USUARIO
 
-    let message = "venta para la estacion de " + this.formatNumber(amount) + " litros al precio de $" + this.formatNumber(price) + "     " + this.getLocalDate();
-    console.log("MESSAGE: "+ message);
-    this.historialUpdate(message);
+    let message1 = new message(` | Venta para la estacion de ${this.formatNumber(amount)} litros al precio de $${this.formatNumber(price)}`, dateOp);
+    this.historialUpdate(message1);
 
-    let newOperation = new operation(amount, price, "venta");
+    let newOperation = new operation(amount, price, "venta", dateOp);
 
     newOperation.profit = currentProfit; ///GANANCIA DE LA OPERACION
+    newOperation.id = operations.length;
     let totalProfit = GlobalFunctions.getTotalProfit();
     totalProfit += newOperation.profit;
     localStorage.setItem("profit", JSON.stringify(totalProfit));
 
     operations.unshift(newOperation);
     localStorage.setItem("operations", JSON.stringify(operations));
-    this.fuelXpriceActualize(costPrice, amount, newOperation);
+    this.fuelXpriceActualize(costPrice, amount);
 
     this.actualicePriceToPay(moneyXliter, amount, costPrice);
       }
     }
   }
-    window.location.href = '';
+   window.location.href = '';
   }
   getMoneyXliter(): number{
     let moneyXliterDoc = document.getElementById("moneyXliterInp") as HTMLInputElement;
@@ -140,7 +188,7 @@ export class OutFuelButtonComponent {
     }
     return moneyXliter;
   }
-  fuelXpriceActualize(costPrice: number, fuel:number, newOperation: operation){
+  fuelXpriceActualize(costPrice: number, fuel:number){
     let fuelXprice: Array<operation> = [];
     let fuelXpriceStorage = localStorage.getItem("fuelXprice");
     if(fuelXpriceStorage){
@@ -160,11 +208,7 @@ export class OutFuelButtonComponent {
         if(fuelXprice[i].fuelAmount == 0){
           fuelXprice.splice(i, 1);
         }
-      }else{
-        fuelXprice.unshift(newOperation);
       }
-    }else {
-      fuelXprice.unshift(newOperation);
     }
     localStorage.setItem("fuelXprice", JSON.stringify(fuelXprice));
   }
@@ -187,7 +231,7 @@ export class OutFuelButtonComponent {
   }
   calculateProFit(fuel: number, price: number, costPrice: number): number{
     let totalPrice = (fuel*price);
-    let totalCostPrice = (fuel*costPrice);
+    let totalCostPrice = costPrice;
     let finalProFit = totalPrice - totalCostPrice;
     return finalProFit;
   }
@@ -266,16 +310,27 @@ export class OutFuelButtonComponent {
     }
     return costPrice;
   }
-  searchOldestPrice(operations: Array<operation>){
-    let costPrice = operations[0].fuelPrice;
-    let index = 0;
-    for(let i=0; i<operations.length; i++){
-      if(operations[i].fuelPrice < costPrice){
-        costPrice = operations[i].fuelPrice;
-        index = i;
-      }
+  searchOldestPrice(){
+    let operations: Array<operation> = [];
+    let opAux = localStorage.getItem("fuelXprice");
+    if(opAux){
+      operations = JSON.parse(opAux);
     }
+    let costPrice = operations[operations.length-1].fuelPrice;
     return costPrice;
+  }
+  searchPriceBefore(position: number){
+    let operations: Array<operation> = [];
+    let opAux = localStorage.getItem("fuelXprice");
+    if(opAux){
+      operations = JSON.parse(opAux);
+    }
+    if(position<operations.length){
+      let costPrice = operations[position-1].fuelPrice;
+      return costPrice;
+    }else{
+      return 0;
+    }
   }
   validators(index: number, operations: Array<operation>, fuel: number): number{
     if(index<operations.length){
@@ -305,12 +360,11 @@ export class OutFuelButtonComponent {
         i++;
       }
     }
-    console.log("OPERATION TYPE: "+fuelXprice[i].type);
     return this.validators(i, fuelXprice, fuel);
   }
-  historialUpdate(message: string){
+  historialUpdate(message: message){
     let historial = localStorage.getItem("movements");
-    let movements: Array<string> = [];
+    let movements: Array<message> = [];
     if(historial){
       movements = JSON.parse(historial);
     }
@@ -329,5 +383,28 @@ export class OutFuelButtonComponent {
   }
   formatNumber(number: number): string {
     return number.toLocaleString(); // Esto añadirá separadores de miles
+  }
+  displayLabel(name: string, nameInp: string){
+    let miInp = document.getElementById(nameInp) as HTMLInputElement;
+    if(miInp){
+      if(miInp.value && miInp.value.trim() !== ""){
+        GlobalFunctions.displayBlock(name);
+      }else{
+        GlobalFunctions.displayNone(name);
+      }
+    }
+  }
+  mostrarOcultarLabel(name: string, nameInp: string) {
+    var input = document.getElementById(nameInp) as HTMLInputElement;
+    var labelResultado = document.getElementById(name);
+    if(input){
+      if(labelResultado){
+        if (input.value && input.value.trim() !== "") {
+          labelResultado.style.display = 'block';
+        } else {
+          labelResultado.style.display = 'none';
+        }
+      }
+    }
   }
 }

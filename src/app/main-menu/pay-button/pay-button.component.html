@@ -7,24 +7,38 @@
 </head>
 <body>
     <app-nav-bar></app-nav-bar>
-    <div id="form">
-        <label for="type">Tipo de pago</label>
-        <br>
-        <input type="text" name="type" id="typeInp" placeholder="Cheque, efectivo, transferencia, etc.">
-        <br>
-        <label for="amount">Monto del pago</label>
-        <br>
-        <input type="number" name="amount" id="amountInp" placeholder="MAXIMO: {{totalAmount}}" max="{{totalAmount}}">
-        <br>
-        <label for="reason">Motivo del pago</label>
-        <br>
-        <input type="text" name="reason" id="reasonInp" placeholder="Gastos del camion">
-        <br>
-        <button id="enter" (click)="pay()">PAGAR</button>
-    </div>
     <div id="info">
-        <p id="amount" *ngIf="totalAmount>0">TOTAL A PAGAR: ${{totalAmount}}</p>
+        <p id="amount" *ngIf="totalAmount>0">TOTAL A PAGAR: ${{formatNumber(totalAmount)}}</p>
         <p id="notAmount" *ngIf="totalAmount<=0">NO HAY CUENTAS A PAGAR</p>
+    </div>
+    <div id="container">
+        <div id="form">
+            <label for="type">Tipo de pago</label>
+            <br>
+            <input type="text" name="type" id="typeInp" placeholder="Cheque, efectivo, transferencia, etc.">
+            <br>
+            <label for="amount">Monto del pago</label>
+            <br>
+            <input type="number" name="amount" id="amountInp" placeholder="DISPONIBLE: ${{formatNumber(amountSells)}}" max="{{amountSells}}">
+            <button (click)="changeInput()">MAX</button>
+            <br>
+            <label for="reason">Motivo del pago</label>
+            <br>
+            <input type="text" name="reason" id="reasonInp" placeholder="Gastos del camion">
+            <br>
+            <div id="formButtons">
+                <button id="enter" class="formButton" (click)="pay()">PAGAR</button>
+                <button id="addCash" class="formButton" (click)="displayAdd('addMoney', 'block')">AGREGAR SALDO</button>
+            </div>
+            <div id="addMoney" style="display: none;">
+                <label for="addAmount">Monto a agregar</label>
+                <br>
+                <input type="number" name="addAmountInp" id="addAmountInp" placeholder="Monto a agregar">
+                <br>
+                <button id="added" class="formButton" (click)="addCash()">AGREGAR</button>
+                <button id="back" class="formButton" (click)="displayAdd('addMoney', 'none')">VOLVER</button>
+            </div>
+        </div>
     </div>
     <div id="buttons">
         <div id="backMenu" class="button" (click)="changeWindow('')">IR AL MENU</div>

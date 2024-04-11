@@ -48,7 +48,7 @@
     padding-bottom: 20%;
     border-radius: 10px;
     border: 2px solid rgb(176, 176, 176);
-
+    position: relative;
 }
 #amountInp, #FreightamountInp{
     background-image: url('..//..//..//assets/fuel-svgrepo-com.svg');
@@ -70,6 +70,9 @@
     background-position: 10px center; /* Ajusta la posición de la imagen */
     background-repeat: no-repeat;
     background-position-x: right;
+}
+#priceInp{
+    margin-top: 35px;
 }
 #enter{
     margin-top: 15px;
@@ -98,4 +101,19 @@
     justify-content: space-between;
     margin-left: 10px;
     margin-right: 10px;
+}
+#amount {
+    position: absolute;
+    top: 120px; /* Ajusta la posición superior según sea necesario */
+    left: 10px;
+}
+#costPrice {
+    position: absolute;
+    top: 200px; /* Ajusta la posición superior según sea necesario */
+    left: 10px;
+}
+#price{
+    position: absolute;
+    top: 275px; /* Ajusta la posición superior según sea necesario */
+    left: 10px;
 }

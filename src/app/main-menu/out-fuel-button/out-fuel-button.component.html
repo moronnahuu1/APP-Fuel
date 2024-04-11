@@ -4,19 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        /* Estilo para ocultar las flechas del input de tipo number */
-        input[type="number"] {
-          -moz-appearance: textfield; /* Firefox */
-          appearance: textfield; /* Estándar */
-        }
-    
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-          -webkit-appearance: none; /* Safari y Chrome */
-          margin: 0; /* Margen adicional */
-        }
-      </style>
 </head>
 <body>
     <app-nav-bar></app-nav-bar>
@@ -28,11 +15,17 @@
         <div id="personalForm" class="form" style="display: none;">
             <h1 class="ventas">VENTA PERSONAL</h1>
             <br>
-            <input type="number" name="amount" id="amountInp" placeholder="Cantidad de litros a vender">
+            <label for="amount" id="amount" style="display: none;">Cantidad de litros a vender *</label>
             <br>
-            <input type="number" name="costPrice" id="costPriceInp" placeholder="Costo por unidad (litro)">
+            <input type="number" name="amount" id="amountInp" (change)="mostrarOcultarLabel('amount', 'amountInp')" placeholder="Cantidad de litros a vender" (input)="displayLabel('amount', 'amountInp')">
             <br>
-            <input type="number" name="price" id="priceInp" placeholder="Precio de venta">
+            
+            <label for="price" id="price" style="display: none;">Precio de venta *</label>
+            <input type="number" name="price" id="priceInp" (change)="mostrarOcultarLabel('price', 'priceInp')" placeholder="Precio de venta" (input)="displayLabel('price', 'priceInp')">
+            <br>
+            <label for="date" id="date" style="display: none;">Fecha de compra</label>
+            <br>
+            <input type="date" name="date" id="dateInp" (change)="mostrarOcultarLabel('date', 'dateInp')" (input)="displayLabel('date', 'dateInp')" placeholder="Fecha de venta">
             <br>
             <button id="enter" (click)="personalSells()">VENDER</button>
         </div>
@@ -44,6 +37,10 @@
             <input type="number" name="Freightprice" id="FreightpriceInp" placeholder="Precio de venta">
             <br>
             <input type="number" name="moneyXliter" id="moneyXliterInp" placeholder="Ganancia por litro">
+            <br>
+            <label for="freightDate" id="freightDate" style="display: none;">Fecha de venta</label>
+            <br>
+            <input type="date" name="freightDate" id="freightDateInp" (change)="mostrarOcultarLabel('freightDate', 'freightDateInp')" (input)="displayLabel('freightDate', 'freightDateInp')" placeholder="Fecha de venta">
             <br>
             <button id="enter" (click)="gasStationSells()">VENDER</button>
         </div>

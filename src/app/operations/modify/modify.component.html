@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="allData">
+        <div id="fuelAmount">
+            <p id="amount">CANTIDAD DE LITROS: {{operationToModify.fuelAmount}}</p>
+            <div id="buttonAmount" class="button" (click)="modifyOp('amount')">MODIFICAR</div>
+        </div>
+        <div id="fuelPrice">
+            <p id="price">PRECIO POR LITRO: {{operationToModify.fuelPrice}}</p>
+            <div id="buttonPrice" class="button" (click)="modifyOp('price')">MODIFICAR</div>
+        </div>
+        <div id="opDate">
+            <p id="date">FECHA DE VENTA: {{operationToModify.actualDate}}</p>
+            <div id="buttonDate" class="button" (click)="modifyOp('date')">MODIFICAR</div>
+        </div>
+        <p id="totalPrice">PRECIO TOTAL: {{operationToModify.totalPrice}}</p>
+        <p id="profit"></p>
+    </div>
+    <div id="modifyAmount" style="display: none;">
+        <label for="amountModify" id="amountModifyLabel">Cantidad de litros *</label>
+        <br>
+        <input type="number" name="amountModify" id="amountModifyInp" placeholder="Cantidad de litros a vender *">
+        <div id="amountButton" class="button" (click)="changeData('amount', 'amountModifyInp')">GUARDAR</div>
+    </div>
+
+    <div id="modifyPrice" style="display: none;">
+        <label for="priceModify" id="priceModifyLabel">Precio por litro *</label>
+        <br>
+        <input type="number" name="priceModify" id="priceModifyInp" placeholder="Precio por litro *">
+        <div id="priceButton" class="button" (click)="changeData('price', 'priceModifyInp')">GUARDAR</div>
+    </div>
+
+    <div id="modifyDate" style="display: none;">
+        <label for="dateModify" id="dateModifyLabel">Fecha *</label>
+        <br>
+        <input type="date" name="dateModify" id="dateModifyInp" placeholder="Fecha *">
+        <div id="dateButton" class="button" (click)="changeData('date', 'dateModifyInp')">GUARDAR</div>
+    </div>
+</body>
+</html>

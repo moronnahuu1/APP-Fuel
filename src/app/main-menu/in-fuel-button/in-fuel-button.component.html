@@ -4,19 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        /* Estilo para ocultar las flechas del input de tipo number */
-        input[type="number"] {
-          -moz-appearance: textfield; /* Firefox */
-          appearance: textfield; /* Estándar */
-        }
-    
-        input[type="number"]::-webkit-inner-spin-button,
-        input[type="number"]::-webkit-outer-spin-button {
-          -webkit-appearance: none; /* Safari y Chrome */
-          margin: 0; /* Margen adicional */
-        }
-      </style>
 </head>
 <body>
     <app-nav-bar></app-nav-bar>
@@ -24,9 +11,17 @@
         <div id="form">
             <h1 id="compra">COMPRA DE COMBUSTIBLE</h1>
             <br>
-            <input type="number" name="amount" id="amountInp" placeholder ="Cantidad de litros a comprar">
+            <label for="amount" id="amount" style="display: none;">Cantidad de litros a comprar *</label>
             <br>
-            <input type="number" name="price" id="priceInp" placeholder="Precio por unidad (litro)">
+            <input type="number" name="amount" id="amountInp" (change)="mostrarOcultarLabel('amount', 'amountInp')" placeholder ="Cantidad de litros a comprar" (input)="displayLabel('amount', 'amountInp')">
+            <br>
+            <label for="amount" id="price" style="display: none;">Precio por unidad (litro) *</label>
+            <br>
+            <input type="number" name="price" id="priceInp" (change)="mostrarOcultarLabel('price', 'priceInp')" placeholder="Precio por unidad (litro)" (input)="displayLabel('price', 'priceInp')">
+            <br>
+            <label for="date" id="date" style="display: none;">Fecha de compra</label>
+            <br>
+            <input type="date" name="date" id="dateInp" (change)="mostrarOcultarLabel('date', 'dateInp')" (input)="displayLabel('date', 'dateInp')" placeholder="Fecha de compra">
             <br>
             <button id="enter" (click)="addLiters()">COMPRAR</button>
         </div>

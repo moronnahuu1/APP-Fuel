@@ -6,9 +6,47 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>BALANCE</h1>
-    <p id="profit"></p>
-    <p id="fuelCant"></p>
-    <div id="resetAll" class="button" (click)="resetProfit()">RESTABLECER GANANCIAS</div>
+    <app-nav-bar></app-nav-bar>
+    <h1 id="balance">BALANCE</h1>
+    <div id="ALL">
+        <div id="cashRegister" class="addition">
+            <p class="total">REGISTRO DE DINERO</p>
+            <p class="total">TOTAL EN CAJA: ${{formatNumber(totalCash)}}</p>
+            <p>A PAGAR: ${{formatNumber(totalDebt)}}</p>
+            <p>GANANCIA ESTIMADA: ${{formatNumber(totalProfit)}}</p>
+        </div>
+
+        <div id="fuelCant" class="addition">
+            <p class="total">REGISTRO DE LITROS</p>
+            <p id="fuelTotal" class="total">TOTAL: {{formatNumber(totalFuel)}}</p>
+            <div id="fuelXprice" class="inline">
+                <p id="fuel">LITROS <br>PRECIO </p>
+                <p id="operations" *ngFor="let operationAux of fuelXprice"> {{operationAux.fuelAmount}} <br> ${{operationAux.fuelPrice}} </p>
+            </div>
+        </div>
+    
+        <div id="operationsAmount" class="addition">
+            <p class="total">REGISTRO DE OPERACIONES</p>
+            <p id="opTotal" class="total">TOTAL: {{totalOperations}}</p>
+            <div id="typeOperations" class="inline">
+                <p>VENTAS: {{totalSells}}</p>
+                <p>COMPRAS: {{totalBuys}}</p>
+            </div>
+            <p>MAYOR VENTA: {{biggestSell?.fuelAmount}} LITROS</p>
+            <p>MAYOR COMPRA: {{biggestBuy?.fuelAmount}} LITROS</p>
+        </div>
+    </div>
+    <div id="buttons">
+        <div id="backMenu" class="button" (click)="changeWindow('')">IR AL MENU</div>
+        <div id="seeOldProfits" class="button" (click)="changeDisplay('profitDiv', 'block')">VER GANANCIAS</div>
+        <div id="resetAll" class="button" (click)="resetProfit()">RESTABLECER GANANCIAS</div>
+    </div>
+    <div id="profitDiv" style="display: none;">
+        <p id="profitTitle">GANANCIAS ANTERIORES</p>
+        <div id="profitMessages" class="addition" *ngFor="let message of profitMessages">
+            <p id="profitText">{{message}}</p>
+        </div>
+        <div id="profitButton" class="button" (click)="changeDisplay('profitDiv', 'none')">OCULTAR</div>
+    </div>
 </body>
 </html>

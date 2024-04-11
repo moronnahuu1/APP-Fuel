@@ -11,7 +11,7 @@
     <div id="allIn">
         <div id="container">
             <div class="message" *ngFor="let message of movements">
-                <p>{{message}}</p>
+                <p>{{getDayInfo(message.currentDate)}} {{message.message}}</p>
             </div>
         </div>
     </div>

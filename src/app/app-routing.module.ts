@@ -8,6 +8,9 @@ import { MovementsHistoryComponent } from './movements-history/movements-history
 import { OperationsComponent } from './operations/operations.component';
 import { FuelRegisterComponent } from './fuel-register/fuel-register.component';
 import { BalanceComponent } from './balance/balance.component';
+import { SelectedOperationsComponent } from './operations/selected-operations/selected-operations.component';
+import { SavedOperationsComponent } from './operations/selected-operations/saved-operations/saved-operations.component';
+import { ModifyComponent } from './operations/modify/modify.component';
 
 const routes: Routes = [
   {
@@ -34,6 +37,15 @@ const routes: Routes = [
   },{
     path: 'balance',
     component: BalanceComponent
+  },{
+    path: 'selectedOperations',
+    component: SelectedOperationsComponent
+  },{
+    path: 'savedSelectedOperations',
+    component: SavedOperationsComponent
+  },{
+    path: 'modifyOp',
+    component: ModifyComponent
   }
 ];
 @NgModule({

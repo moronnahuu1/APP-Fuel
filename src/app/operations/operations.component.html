@@ -7,15 +7,67 @@
 </head>
 <body>
     <app-nav-bar></app-nav-bar>
-    <div id="operations">
-        <div id="operation" *ngFor="let operationAux of operationsValues">
+    <h1 id="nameOp">OPERACIONES</h1>
+    <div id="navButtons">
+        <div id="sellsButton" class="navButton" (click)="displayChange('venta')">VENTAS</div>
+        <div id="boughtsButton" class="navButton" (click)="displayChange('compra')">COMPRAS</div>
+        <div id="allButton" class="navButton" (click)="displayChange('all')">TODAS</div>
+    </div>
+
+    <div id="selectionInfo">
+        <div id="start" style="display: none;">
+            <div id="selectFirst">SELECCIONE LA OPERACION INICIAL</div>
+            <div id="buttonStart" class="button" (click)="displaySelection('end', 'start')">SELECCIONAR</div>
+        </div>
+        <div id="end" style="display: none;">
+            <div id="selectLast">SELECCIONE LA OPERACION FINAL</div>
+            <div id="buttonEnd" class="button" (click)="displaySelection('finish', 'end')">SELECCIONAR</div>
+        </div>
+        <div id="modify" style="display: none;">
+            <p>SELECCIONE LA OPERACION A MODIFICAR</p>
+            <div id="buttonModify" class="button" (click)="changeWindow('modifyOp')">SELECCIONAR</div>
+        </div>
+    </div>
+
+    <div id="allOperations" class="operations">
+        <div id="operation" *ngFor="let operationAux of operationsValues" (click)="selectOperation(operationAux, 'all')" [ngStyle]="{'cursor': selectFunction === true ? 'pointer' : ''}" [ngClass]="{'selectedOP': operationAux === selectedOperation, 'storagedOp': operationAux === storagedOperation}">
             <p>Cantidad de litros: {{formatNumber(operationAux.fuelAmount)}}</p>
             <p>Precio por litro: {{formatNumber(operationAux.fuelPrice)}}</p>
-            <p>Fecha: {{operationAux.actualDate}}</p>
+            <p>Fecha: {{getDayInfo(operationAux.actualDate)}}</p>
             <p>Tipo de operacion: {{operationAux.type}}</p>
-            <p>Precio total de la operacion: {{formatNumber(operationAux.totalPrice)}}</p>
-            <p *ngIf="operationAux.type == 'venta'">Ganancia: {{operationAux.profit}}</p>
+            <p>Precio total de la operacion: ${{formatNumber(operationAux.totalPrice)}}</p>
+            <p *ngIf="operationAux.type == 'venta'">Ganancia: ${{operationAux.profit?.toFixed(2)}}</p>
+            <p>ID: {{operationAux.id}}</p>
         </div>
+    </div>
+
+    <div id="sellsOperations" class="operations" style="display: none;">
+        <ng-container *ngFor="let operationAux of operationsValues">
+            <div id="operation" *ngIf="operationAux.type == 'venta'" (click)="selectOperation(operationAux, 'venta')" [ngStyle]="{'cursor': selectFunction === true ? 'pointer' : ''}" [ngClass]="{'selectedOP': operationAux === selectedOperation, 'storagedOp': operationAux === storagedOperation}">
+                <p>Cantidad de litros: {{formatNumber(operationAux.fuelAmount)}}</p>
+                <p>Precio por litro: {{formatNumber(operationAux.fuelPrice)}}</p>
+                <p>Fecha: {{operationAux.actualDate}}</p>
+                <p>Tipo de operacion: {{operationAux.type}}</p>
+                <p>Precio total de la operacion: ${{formatNumber(operationAux.totalPrice)}}</p>
+                <p *ngIf="operationAux.type == 'venta'">Ganancia: ${{operationAux.profit?.toFixed(2)}}</p>
+            </div>
+          </ng-container>
+    </div>
+
+    <div id="boughtOperations" class="operations" style="display: none;">
+        <ng-container *ngFor="let operationAux of operationsValues">
+            <div id="operation" *ngIf="operationAux.type == 'compra'" (click)="selectOperation(operationAux, 'compra')" [ngStyle]="{'cursor': selectFunction === true ? 'pointer' : ''}" [ngClass]="{'selectedOP': operationAux === selectedOperation, 'storagedOp': operationAux === storagedOperation}">
+                <p>Cantidad de litros: {{formatNumber(operationAux.fuelAmount)}}</p>
+                <p>Precio por litro: {{formatNumber(operationAux.fuelPrice)}}</p>
+                <p>Fecha: {{operationAux.actualDate}}</p>
+                <p>Tipo de operacion: {{operationAux.type}}</p>
+                <p>Precio total de la operacion: ${{formatNumber(operationAux.totalPrice)}}</p>
+            </div>
+          </ng-container>
+    </div>
+    <div id="selectButtons">
+        <div id="selectModify" class="button" (click)="displaySelection('modify', '')">MODIFICAR</div>
+        <div id="selectOperations" class="button" (click)="displaySelection('start', 'end')">SELECCIONAR</div>
     </div>
     <div id="buttons">
         <div id="backMenu" class="button" (click)="changeWindow('')">IR AL MENU</div>
