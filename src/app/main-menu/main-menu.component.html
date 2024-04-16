@@ -4,7 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        article {
+            border: 1px solid #ccc;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        img {
+            height: auto;
+            width: 320px;
+            max-width: 100%;
+        }
+    </style>
+    <script type="module">
+        fetch('http://localhost:2132/operations')
+        .then(res => res.json())
+        .then(operations => {
+            const html = operations.map(operation => {
+                return `<article>
+                    <h2>${operation.fuelAmount}</h2>
+                    <img src="${operation.type}" alt="" />
+                    <p>${operation.totalPrice}</p>
+                </article>
+            `
+            }).join('')
+            document.querySelector('main').innerHTML = html
+        })
+    </script>
 </head>
+<main></main>
 <body>
     <app-nav-bar></app-nav-bar>
     <div id="ideas">

@@ -14,6 +14,7 @@ export class SelectedOperationsComponent implements OnInit{
   marginFuel: number = 0;
   totalFuelSold: number = 0;
   totalFuelBought: number = 0;
+  totalSellsMoney: number = 0;
   totalAmount: number = 0;
   totalProfit: number = 0;
   type: string = '';
@@ -37,6 +38,7 @@ export class SelectedOperationsComponent implements OnInit{
     this.operationValues = GlobalFunctions.getSpecificOperations(this.type);
     this.storagedOperations = GlobalFunctions.getSelectedOperations();
     this.getTotalFuel();
+    this.getTotalMoney();
     if(this.type == "compra"){
     }else{
       this.getTotalProfit();
@@ -74,6 +76,13 @@ export class SelectedOperationsComponent implements OnInit{
       }
     }
     this.mediaProfit = this.totalProfit/count;
+  }
+  getTotalMoney(){
+    for(let i=0; i<this.operationValues.length; i++){
+      if(this.operationValues[i].type == 'venta'){
+        this.totalSellsMoney += this.operationValues[i].totalPrice;
+      }
+    }
   }
   getTotalFuel(){
     let i=0;

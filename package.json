@@ -1,6 +1,7 @@
 {
   "name": "app-camion",
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -19,13 +20,21 @@
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
     "cors": "^2.8.5",
+    "crypto-browserify": "^3.12.0",
     "date-fns": "^3.6.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.9.4",
+    "process": "^0.11.10",
+    "promise-mysql": "^5.2.0",
     "rxjs": "~7.8.0",
+    "stream-browserify": "^3.0.0",
+    "timers-browserify": "^2.0.12",
     "tslib": "^2.3.0",
+    "url": "^0.11.3",
+    "util": "^0.12.5",
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
